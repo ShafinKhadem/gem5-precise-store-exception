@@ -1498,6 +1498,14 @@ IEW::tick()
             updateLSQNextCycle = true;
             instQueue.commit(fromCommit->commitInfo[tid].doneSeqNum,tid);
         }
+        if (fromCommit->commitInfo[tid].almostDoneSeqNum != 0 &&
+            !fromCommit->commitInfo[tid].squash &&
+            !fromCommit->commitInfo[tid].robSquashing) {
+
+            ldstQueue.commitStores(fromCommit->commitInfo[tid].almostDoneSeqNum,tid);
+
+            updateLSQNextCycle = true;
+        }
 
         if (fromCommit->commitInfo[tid].nonSpecSeqNum != 0) {
 

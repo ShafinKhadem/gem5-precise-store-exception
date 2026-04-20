@@ -980,8 +980,16 @@ Commit::commitInsts()
         } else {
             set(pc[tid], head_inst->pcState());
 
-            // Try to commit the head instruction.
-            bool commit_success = commitHead(head_inst, num_committed);
+            bool commit_success = false;
+
+            if (head_inst->isStore() && !head_inst->isSquashed() &&
+                !head_inst->isStoreConditional() &&
+                !head_inst->isSquashedInLSQ() && !head_inst->isCompleted()) {
+                toIEW->commitInfo[tid].almostDoneSeqNum = head_inst->seqNum;
+            } else {
+                // Try to commit the head instruction.
+                commit_success = commitHead(head_inst, num_committed);
+            }
 
             if (commit_success) {
                 ++num_committed;

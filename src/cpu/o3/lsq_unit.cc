@@ -1082,7 +1082,7 @@ LSQUnit::storePostSend()
         // The store is basically completed at this time. This
         // only works so long as the checker doesn't try to
         // verify the value in memory for stores.
-        storeWBIt->instruction()->setCompleted();
+        // storeWBIt->instruction()->setCompleted();
 
         if (cpu->checker) {
             cpu->checker->verify(storeWBIt->instruction());

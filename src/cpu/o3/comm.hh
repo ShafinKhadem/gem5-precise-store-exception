@@ -201,6 +201,11 @@ struct TimeStruct
         /// retired or squashed sequence number.
         InstSeqNum doneSeqNum = 0; // *F, I
 
+        /// Represents the instruction that has either been retired or
+        /// squashed.  Similar to having a single bus that broadcasts the
+        /// retired or squashed sequence number.
+        InstSeqNum almostDoneSeqNum = 0; // *F, I
+
         /// Tell Rename how many free entries it has in the ROB
         unsigned freeROBEntries = 0; // *R
 
